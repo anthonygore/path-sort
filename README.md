@@ -1,3 +1,32 @@
+## Fork info
+
+This adds one change: you can optionally specify if the directories go first or last in the sort i.e.:
+
+``` javascript
+[
+  'afile.js',
+  'bdir/bfile.js',
+  'cfile.js',
+  'ddir/dsubdir/dfile.js'
+]
+```
+Becomes this:
+
+``` javascript
+[
+  'afile.js',
+  'cfile.js',
+  'bdir/bfile.js',
+  'ddir/dsubdir/dfile.js'
+]
+```
+
+Use it like this:
+
+### `require('path-sort')(files, sep, [, dirPos])` ###
+
+Where `dirPos` is optionally 'first' or 'last'.
+
 # path-sort [![stable](http://hughsk.github.io/stability-badges/dist/stable.svg)](http://github.com/hughsk/stability-badges) #
 
 Sort a list of file/directory paths, such that something like this:
