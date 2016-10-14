@@ -1,14 +1,28 @@
 module.exports = pathsort
 module.exports.standalone = standalone
 
-function pathsort(paths, sep) {
-  sep = sep || '/'
-
-  return paths.map(function(el) {
+function pathsort(paths, sep, dirPos) {
+  let sorted = paths.map(function(el) {
     return el.split(sep)
   }).sort(sorter).map(function(el) {
     return el.join(sep)
-  })
+  });
+  if (!dirPos || (dirPos !== 'first' && dirPos !== 'last')) {
+    return sorted;
+  } else {
+    sep = sep || '/';
+    return sorted.sort((a, b) => {
+      let aSplit = a.split('/').filter(val => { return !!val });
+      let bSplit = b.split('/').filter(val => { return !!val });
+      if (aSplit.length === 1 && bSplit.length !== 1) {
+        return dirPos === 'first';
+      } else if (aSplit.length !== 1 && bSplit.length === 1) {
+        return dirPos === 'last';
+      } else {
+        return 0;
+      }
+    });
+  }
 }
 
 function sorter(a, b) {
